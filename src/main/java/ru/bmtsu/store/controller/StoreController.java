@@ -77,7 +77,7 @@ public class StoreController {
     @ExceptionHandler({OrderServiceNotAvailableException.class, WarehouseServiceNotAvailableException.class, WarrantlyServiceNotAvailableException.class})
     public ResponseEntity<ErrorDTO> handlerServiceNotAvailableException(Exception e) {
         return ResponseEntity
-                .status(HttpStatus.NOT_FOUND)
+                .status(HttpStatus.UNPROCESSABLE_ENTITY)
                 .body(new ErrorDTO(e.getMessage()));
     }
 
