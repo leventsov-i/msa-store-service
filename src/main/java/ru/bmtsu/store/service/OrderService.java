@@ -11,6 +11,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import ru.bmtsu.store.controller.dto.PurchaseRequestDTO;
 import ru.bmtsu.store.controller.dto.WarrantyRequestDTO;
 import ru.bmtsu.store.controller.dto.WarrantyResponseDTO;
+import ru.bmtsu.store.exception.ItemNotAvailableException;
 import ru.bmtsu.store.exception.NotFoundOrderException;
 import ru.bmtsu.store.exception.OrderServiceNotAvailableException;
 import ru.bmtsu.store.service.dto.CreateOrderResponseDTO;
@@ -103,6 +104,8 @@ public class OrderService {
         } catch (HttpClientErrorException e) {
             if (e.getStatusCode().equals(HttpStatus.NOT_FOUND)) {
                 throw new NotFoundOrderException();
+            } else if (e.getStatusCode().equals(HttpStatus.CONFLICT)) {
+                throw new ItemNotAvailableException();
             } else {
                 throw new OrderServiceNotAvailableException();
             }
@@ -121,6 +124,8 @@ public class OrderService {
         } catch (HttpClientErrorException e) {
             if (e.getStatusCode().equals(HttpStatus.NOT_FOUND)) {
                 throw new NotFoundOrderException();
+            } else if (e.getStatusCode().equals(HttpStatus.CONFLICT)) {
+                throw new ItemNotAvailableException();
             } else {
                 throw new OrderServiceNotAvailableException();
             }

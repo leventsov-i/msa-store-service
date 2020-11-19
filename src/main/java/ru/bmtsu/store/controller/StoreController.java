@@ -74,6 +74,13 @@ public class StoreController {
                 .body(new ErrorDTO(e.getMessage()));
     }
 
+    @ExceptionHandler(ItemNotAvailableException.class)
+    public ResponseEntity<ErrorDTO> handlerItemNotAvailableException(Exception e) {
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
+                .body(new ErrorDTO(e.getMessage()));
+    }
+
     @ExceptionHandler({OrderServiceNotAvailableException.class, WarehouseServiceNotAvailableException.class, WarrantlyServiceNotAvailableException.class})
     public ResponseEntity<ErrorDTO> handlerServiceNotAvailableException(Exception e) {
         return ResponseEntity
